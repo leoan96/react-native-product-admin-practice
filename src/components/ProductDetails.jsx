@@ -25,11 +25,10 @@ const ProductDetails = ({ navigation, route }) => {
           `http://127.0.0.1:3001/${route.params.productCode}`
         );
         const data = await response.json();
-        console.log(data);
         setProductName(data.product_name);
         setProductCode(data.product_code);
         setProductType(data.product_type);
-        setDate(data.date);
+        setDate(new Date(data.date));
       } catch (err) {
         console.log(err);
       }
@@ -44,24 +43,26 @@ const ProductDetails = ({ navigation, route }) => {
   };
 
   const onButtonPressHandler = async () => {
-    const newProduct = {
+    const updateProduct = {
       product_code: productCode,
       product_name: productName,
       product_type: productType,
       date: date.toISOString().split("T")[0],
     };
-    // try {
-    //   await fetch("http://127.0.0.1:3001", {
-    //     method: "POST",
-    //     headers: {
-    //       Accept: "application/json",
-    //       "Content-Type": "application/json",
-    //     },
-    //     body: JSON.stringify(newProduct),
-    //   });
-    // } catch (err) {
-    //   console.log(err);
-    // }
+
+    try {
+      await fetch(`http://127.0.0.1:3001/${route.params.productCode}`, {
+        method: "PUT",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(updateProduct),
+      });
+      navigation.navigate("Home");
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   return (
@@ -101,12 +102,12 @@ const ProductDetails = ({ navigation, route }) => {
       </View>
       <View>
         <Text style={styles.label}>Date:</Text>
-        {/* <DateTimePicker
+        <DateTimePicker
           value={date}
           mode="date"
           display="default"
           onChange={onDateChangeHandler}
-        /> */}
+        />
       </View>
       <View
         style={{
