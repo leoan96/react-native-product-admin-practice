@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   View,
   Text,
@@ -17,6 +17,25 @@ const ProductDetails = ({ navigation, route }) => {
   const [productType, setProductType] = useState(null);
   const [date, setDate] = useState(new Date());
   const [show, setShow] = useState(false);
+
+  useEffect(() => {
+    const getProductDetails = async () => {
+      try {
+        const response = await fetch(
+          `http://127.0.0.1:3001/${route.params.productCode}`
+        );
+        const data = await response.json();
+        console.log(data);
+        setProductName(data.product_name);
+        setProductCode(data.product_code);
+        setProductType(data.product_type);
+        setDate(data.date);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    getProductDetails();
+  }, []);
 
   const onDateChangeHandler = (event, selectedDate) => {
     const currentDate = selectedDate || date;
@@ -53,6 +72,7 @@ const ProductDetails = ({ navigation, route }) => {
           style={styles.input}
           placeholder="name"
           onChangeText={setProductName}
+          value={productName}
         />
       </View>
       <View>
@@ -61,6 +81,7 @@ const ProductDetails = ({ navigation, route }) => {
           style={styles.input}
           placeholder="code"
           onChangeText={setProductCode}
+          value={productCode}
         />
       </View>
       <View>
@@ -80,12 +101,12 @@ const ProductDetails = ({ navigation, route }) => {
       </View>
       <View>
         <Text style={styles.label}>Date:</Text>
-        <DateTimePicker
+        {/* <DateTimePicker
           value={date}
           mode="date"
           display="default"
           onChange={onDateChangeHandler}
-        />
+        /> */}
       </View>
       <View
         style={{
