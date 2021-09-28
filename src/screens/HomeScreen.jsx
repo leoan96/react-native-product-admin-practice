@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { FontAwesome } from "@expo/vector-icons";
 import {
   View,
@@ -7,12 +7,15 @@ import {
   SafeAreaView,
   FlatList,
   TouchableOpacity,
+  Button,
 } from "react-native";
 import { useIsFocused } from "@react-navigation/core";
+import { AuthContext } from "../context/auth/AuthContextProvider";
 
 const HomeScreen = ({ navigation, route }) => {
   const [products, setProducts] = useState([]);
   const isFocused = useIsFocused();
+  const authContext = useContext(AuthContext);
 
   useEffect(() => {
     const getAllProducts = async () => {
@@ -28,6 +31,10 @@ const HomeScreen = ({ navigation, route }) => {
     };
     getAllProducts();
   }, [isFocused]);
+
+  const signOutHandler = async () => {
+    await authContext.signOut();
+  };
 
   const deleteHandler = async (product_code) => {
     try {
@@ -51,6 +58,7 @@ const HomeScreen = ({ navigation, route }) => {
     <SafeAreaView>
       <View style={styles.header}>
         <Text style={styles.headerText}>All Products</Text>
+        <Button title="Log out" onPress={signOutHandler} />
       </View>
       <FlatList
         data={products}
