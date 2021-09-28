@@ -12,11 +12,13 @@ import {
 import { SafeAreaView } from "react-native-safe-area-context";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import { Picker } from "@react-native-picker/picker";
+import { productTypeValues } from "../constants/productType";
+import { useIsFocused } from "@react-navigation/core";
 
 const AddProduct = ({ navigation, route }) => {
   const [productName, setProductName] = useState("");
   const [productCode, setProductCode] = useState("");
-  const [productType, setProductType] = useState(null);
+  const [productType, setProductType] = useState("apparel");
   const [date, setDate] = useState(new Date());
   const [show, setShow] = useState(false);
   const [modalVisible, setModalVisible] = useState(true);
@@ -43,37 +45,14 @@ const AddProduct = ({ navigation, route }) => {
         },
         body: JSON.stringify(newProduct),
       });
+      setProductName("");
+      setProductCode("");
+      setProductType("apparel");
+      setDate(new Date());
     } catch (err) {
       console.log(err);
     }
   };
-
-  const productTypeValues = [
-    {
-      label: "Apparel",
-      value: "apparel",
-    },
-    {
-      label: "Sporting",
-      value: "sporting",
-    },
-    {
-      label: "Health",
-      value: "health",
-    },
-    {
-      label: "Electronic",
-      value: "electronic",
-    },
-    {
-      label: "Outdoor",
-      value: "outdoor",
-    },
-    {
-      label: "Food",
-      value: "food",
-    },
-  ];
 
   return (
     <SafeAreaView>
@@ -114,6 +93,7 @@ const AddProduct = ({ navigation, route }) => {
             style={styles.input}
             placeholder="name"
             onChangeText={setProductName}
+            value={productName}
           />
         </View>
         <View>
@@ -122,6 +102,7 @@ const AddProduct = ({ navigation, route }) => {
             style={styles.input}
             placeholder="code"
             onChangeText={setProductCode}
+            value={productCode}
           />
         </View>
         <View>
