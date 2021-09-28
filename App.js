@@ -1,55 +1,29 @@
 import React from "react";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { NavigationContainer } from "@react-navigation/native";
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { FontAwesome } from "@expo/vector-icons";
+import BottomTab from "./src/navigators/BottomTabNavigator";
+import ProductDetails from "./src/components/ProductDetails";
 
-import AddProduct from "./src/screens/AddProduct";
-import HomeScreen from "./src/screens/HomeScreen";
-
-const Tab = createBottomTabNavigator();
+const Stack = createNativeStackNavigator();
 
 export default function App() {
   return (
     <NavigationContainer>
-      <Tab.Navigator initialRouteName="Home">
-        <Tab.Screen
+      <Stack.Navigator initialRouteName="Home">
+        <Stack.Screen
           name="Home"
-          component={HomeScreen}
+          component={BottomTab}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="ProductDetails"
+          component={ProductDetails}
           options={{
-            tabBarLabel: "Home",
-            tabBarIcon: () => <FontAwesome name={"home"} size={24} />,
-            title: "All Products",
-            headerShown: false,
+            headerStyle: { backgroundColor: "darkslateblue", height: 100 },
+            headerTintColor: "white",
           }}
         />
-        <Tab.Screen
-          name="AddProduct"
-          component={AddProduct}
-          options={{
-            tabBarLabel: "Add Product",
-            tabBarIcon: () => <FontAwesome name={"cart-plus"} size={24} />,
-            headerShown: false,
-          }}
-        />
-      </Tab.Navigator>
+      </Stack.Navigator>
     </NavigationContainer>
   );
 }
-
-/*
-Stack Navigator
-
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
-
-const Stack = createNativeStackNavigator();
-
-return (
-  <NavigationContainer>
-    <Stack.Navigator initialRouteName="Home">
-      <Stack.Screen name="Home" component={HomeScreen} />
-      <Stack.Screen name="AddProduct" component={AddProduct} />
-    </Stack.Navigator>
-  </NavigationContainer>
-);
-
-*/

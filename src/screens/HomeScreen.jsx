@@ -60,7 +60,11 @@ const HomeScreen = ({ navigation, route }) => {
             <TouchableOpacity style={styles.itemView}>
               <Text
                 style={styles.itemText}
-                // onPress={navigation.navigate("ProductDetails")}
+                onPress={() =>
+                  navigation.navigate("ProductDetails", {
+                    productCode: item.product_code,
+                  })
+                }
               >
                 {item.product_name}
               </Text>

@@ -12,6 +12,7 @@ import {
 import { SafeAreaView } from "react-native-safe-area-context";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import { Picker } from "@react-native-picker/picker";
+import { productTypeValues } from "../constants/productType";
 
 const AddProduct = ({ navigation, route }) => {
   const [productName, setProductName] = useState("");
@@ -47,33 +48,6 @@ const AddProduct = ({ navigation, route }) => {
       console.log(err);
     }
   };
-
-  const productTypeValues = [
-    {
-      label: "Apparel",
-      value: "apparel",
-    },
-    {
-      label: "Sporting",
-      value: "sporting",
-    },
-    {
-      label: "Health",
-      value: "health",
-    },
-    {
-      label: "Electronic",
-      value: "electronic",
-    },
-    {
-      label: "Outdoor",
-      value: "outdoor",
-    },
-    {
-      label: "Food",
-      value: "food",
-    },
-  ];
 
   return (
     <SafeAreaView>
