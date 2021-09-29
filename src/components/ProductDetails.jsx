@@ -10,6 +10,8 @@ import {
 import DateTimePicker from "@react-native-community/datetimepicker";
 import { Picker } from "@react-native-picker/picker";
 import { productTypeValues } from "../constants/productType";
+import { SafeAreaView } from "react-native-safe-area-context";
+import CustomModal from "./CustomModal";
 
 const ProductDetails = ({ navigation, route }) => {
   const [productName, setProductName] = useState("");
@@ -17,6 +19,7 @@ const ProductDetails = ({ navigation, route }) => {
   const [productType, setProductType] = useState(null);
   const [date, setDate] = useState(new Date());
   const [show, setShow] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
     const getProductDetails = async () => {
@@ -66,61 +69,63 @@ const ProductDetails = ({ navigation, route }) => {
   };
 
   return (
-    <View style={styles.container}>
-      <View>
-        <Text style={styles.label}>Product Name:</Text>
-        <TextInput
-          style={styles.input}
-          placeholder="name"
-          onChangeText={setProductName}
-          value={productName}
-        />
-      </View>
-      <View>
-        <Text style={styles.label}>Product Code:</Text>
-        <TextInput
-          style={styles.input}
-          placeholder="code"
-          onChangeText={setProductCode}
-          value={productCode}
-        />
-      </View>
-      <View>
-        <Text style={styles.label}>Product Type:</Text>
-        <Picker
-          selectedValue={productType}
-          onValueChange={(itemValue, itemIndex) => setProductType(itemValue)}
+    <SafeAreaView>
+      <View style={styles.container}>
+        <View>
+          <Text style={styles.label}>Product Name:</Text>
+          <TextInput
+            style={styles.input}
+            placeholder="name"
+            onChangeText={setProductName}
+            value={productName}
+          />
+        </View>
+        <View>
+          <Text style={styles.label}>Product Code:</Text>
+          <TextInput
+            style={styles.input}
+            placeholder="code"
+            onChangeText={setProductCode}
+            value={productCode}
+          />
+        </View>
+        <View>
+          <Text style={styles.label}>Product Type:</Text>
+          <Picker
+            selectedValue={productType}
+            onValueChange={(itemValue, itemIndex) => setProductType(itemValue)}
+          >
+            {productTypeValues.map((type) => (
+              <Picker.Item
+                key={type.value}
+                label={type.label}
+                value={type.value}
+              />
+            ))}
+          </Picker>
+        </View>
+        <View>
+          <Text style={styles.label}>Date:</Text>
+          <DateTimePicker
+            value={date}
+            mode="date"
+            display="default"
+            onChange={onDateChangeHandler}
+          />
+        </View>
+        <View
+          style={{
+            width: `100%`,
+            marginTop: 20,
+            alignItems: "flex-start",
+          }}
         >
-          {productTypeValues.map((type) => (
-            <Picker.Item
-              key={type.value}
-              label={type.label}
-              value={type.value}
-            />
-          ))}
-        </Picker>
+          <TouchableOpacity>
+            <Button title="Edit Product" onPress={onButtonPressHandler} />
+          </TouchableOpacity>
+        </View>
       </View>
-      <View>
-        <Text style={styles.label}>Date:</Text>
-        <DateTimePicker
-          value={date}
-          mode="date"
-          display="default"
-          onChange={onDateChangeHandler}
-        />
-      </View>
-      <View
-        style={{
-          width: `100%`,
-          marginTop: 20,
-          alignItems: "flex-start",
-        }}
-      >
-        <TouchableOpacity>
-          <Button title="Edit Product" onPress={onButtonPressHandler} />
-        </TouchableOpacity>
-      </View>
-    </View>
+    </SafeAreaView>
   );
 };
 
@@ -129,7 +134,8 @@ export default ProductDetails;
 const styles = StyleSheet.create({
   container: {
     paddingLeft: 40,
-    paddingTop: 36,
+    maxWidth: "90%",
+    marginTop: -10,
   },
   label: {
     paddingBottom: 10,

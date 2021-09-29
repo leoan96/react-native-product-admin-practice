@@ -6,8 +6,6 @@ import {
   TextInput,
   Button,
   TouchableOpacity,
-  Modal,
-  Pressable,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import DateTimePicker from "@react-native-community/datetimepicker";
@@ -58,77 +56,12 @@ const AddProduct = ({ navigation, route }) => {
 
   return (
     <SafeAreaView>
-      {/* <CustomModal /> */}
-      <Modal visible={isModalOpen} animationType="slide" transparent={true}>
-        <View
-          style={{
-            flex: 1,
-            justifyContent: "center",
-            alignItems: "center",
-            backgroundColor: "rgba(52, 52, 52, 0.8)",
-            height: "100%",
-          }}
-        >
-          <View
-            style={{
-              padding: "6%",
-              backgroundColor: "lightgrey",
-              height: "23%",
-              width: "75%",
-            }}
-          >
-            <View style={{ flex: 1, justifyContent: "flex-end" }}>
-              <Text
-                style={{ fontWeight: "bold", fontSize: 35, paddingLeft: "4%" }}
-              >
-                Notice
-              </Text>
-              <Text
-                style={{
-                  fontSize: 20,
-                  paddingLeft: "4%",
-                  paddingBottom: "10%",
-                }}
-              >
-                Product Added
-              </Text>
-              <View
-                style={{
-                  flex: 1,
-                  flexDirection: "row",
-                  justifyContent: "space-around",
-                }}
-              >
-                <Pressable
-                  style={{
-                    alignItems: "center",
-                    justifyContent: "center",
-                    paddingHorizontal: 32,
-                    borderRadius: 15,
-                    backgroundColor: "grey",
-                  }}
-                  onPress={() => setIsModalOpen((prevState) => !prevState)}
-                >
-                  <Text style={{ color: "blue", fontSize: 30 }}>Cancel</Text>
-                </Pressable>
-                <Pressable
-                  style={{
-                    alignItems: "center",
-                    justifyContent: "center",
-                    paddingHorizontal: 32,
-                    borderRadius: 15,
-                    backgroundColor: "lightblue",
-                  }}
-                  onPress={() => setIsModalOpen((prevState) => !prevState)}
-                >
-                  <Text style={{ color: "white", fontSize: 30 }}>Ok</Text>
-                </Pressable>
-              </View>
-            </View>
-          </View>
-        </View>
-      </Modal>
-
+      <CustomModal
+        visible={isModalOpen}
+        setIsModalOpen={setIsModalOpen}
+        title="Notice"
+        details="Product Added"
+      />
       <View style={styles.header}>
         <Text style={styles.headerText}>Add Product</Text>
       </View>
@@ -195,11 +128,8 @@ export default AddProduct;
 
 const styles = StyleSheet.create({
   container: {
-    // flex: 1,
-    // backgroundColor: "#fff",
-    // alignItems: "center",
-    // justifyContent: "center",
     paddingLeft: 40,
+    maxWidth: "90%",
   },
   header: {
     paddingTop: 24,
