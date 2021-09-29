@@ -20,8 +20,6 @@ const Routes = () => {
       try {
         userToken = await SecureStore.getItemAsync("userToken");
         await authContext.signIn();
-        console.log("userToken: ", userToken);
-        console.log("authContext: ", authContext);
       } catch (err) {
         console.log(err);
       }
