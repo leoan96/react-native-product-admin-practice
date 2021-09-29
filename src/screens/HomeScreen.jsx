@@ -8,6 +8,7 @@ import {
   FlatList,
   TouchableOpacity,
   Button,
+  Pressable,
 } from "react-native";
 import { useIsFocused } from "@react-navigation/core";
 import { AuthContext } from "../context/auth/AuthContextProvider";
@@ -34,7 +35,6 @@ const HomeScreen = ({ navigation, route }) => {
 
   const signOutHandler = async () => {
     await authContext.signOut();
-    console.log("sign out: ", authContext);
   };
 
   const deleteHandler = async (product_code) => {
@@ -57,13 +57,22 @@ const HomeScreen = ({ navigation, route }) => {
 
   return (
     <SafeAreaView>
-      <View style={styles.header}>
-        <Text style={styles.headerText}>All Products</Text>
-        <Button title="Log out" onPress={signOutHandler} />
+      <View style={styles.headerContainer}>
+        <View style={styles.header}>
+          <Text style={styles.headerText}>All Products</Text>
+          <View style={styles.logoutView}>
+            <Pressable onPress={signOutHandler}>
+              <Text style={styles.logout}>Log Out</Text>
+            </Pressable>
+          </View>
+        </View>
       </View>
       <FlatList
         data={products}
         keyExtractor={(item) => item.product_code}
+        style={{
+          marginBottom: 140,
+        }}
         renderItem={({ item }) => {
           return (
             <TouchableOpacity style={styles.itemView}>
@@ -99,14 +108,23 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
-  header: {
+  headerContainer: {
     paddingTop: 24,
-    paddingLeft: 40,
-    paddingBottom: 20,
+    paddingLeft: "1.7%",
+    paddingBottom: 10,
   },
+  header: { flexDirection: "row", justifyContent: "space-around" },
   headerText: {
     fontSize: 40,
     color: "#444",
+  },
+  logoutView: {
+    marginTop: "4%",
+  },
+  logout: {
+    color: "blue",
+    fontSize: 20,
+    fontWeight: "400",
   },
   itemView: {
     paddingTop: 7,

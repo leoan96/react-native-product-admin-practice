@@ -6,14 +6,13 @@ import {
   TextInput,
   Button,
   TouchableOpacity,
-  Modal,
-  Pressable,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import { Picker } from "@react-native-picker/picker";
 import { productTypeValues } from "../constants/productType";
-import { useIsFocused } from "@react-navigation/core";
+
+import CustomModal from "../components/CustomModal";
 
 const AddProduct = ({ navigation, route }) => {
   const [productName, setProductName] = useState("");
@@ -21,7 +20,7 @@ const AddProduct = ({ navigation, route }) => {
   const [productType, setProductType] = useState("apparel");
   const [date, setDate] = useState(new Date());
   const [show, setShow] = useState(false);
-  const [modalVisible, setModalVisible] = useState(true);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const onDateChangeHandler = (event, selectedDate) => {
     const currentDate = selectedDate || date;
@@ -49,6 +48,7 @@ const AddProduct = ({ navigation, route }) => {
       setProductCode("");
       setProductType("apparel");
       setDate(new Date());
+      setIsModalOpen(true);
     } catch (err) {
       console.log(err);
     }
@@ -56,33 +56,12 @@ const AddProduct = ({ navigation, route }) => {
 
   return (
     <SafeAreaView>
-      {/* <View
-        style={{
-          paddingLeft: 40,
-        }}
-      >
-        <Modal
-          animationType="slide"
-          transparent={true}
-          visible={modalVisible}
-          onRequestClose={() => {
-            Alert.alert("Modal has been closed.");
-            setModalVisible(!modalVisible);
-          }}
-        >
-          <View style={styles.centeredView}>
-            <View style={styles.modalView}>
-              <Text style={styles.modalText}>Hello World!</Text>
-              <Pressable
-                style={[styles.button, styles.buttonClose]}
-                onPress={() => setModalVisible(!modalVisible)}
-              >
-                <Text style={styles.textStyle}>Hide Modal</Text>
-              </Pressable>
-            </View>
-          </View>
-        </Modal>
-      </View> */}
+      <CustomModal
+        visible={isModalOpen}
+        setIsModalOpen={setIsModalOpen}
+        title="Notice"
+        details="Product Added"
+      />
       <View style={styles.header}>
         <Text style={styles.headerText}>Add Product</Text>
       </View>
@@ -149,11 +128,8 @@ export default AddProduct;
 
 const styles = StyleSheet.create({
   container: {
-    // flex: 1,
-    // backgroundColor: "#fff",
-    // alignItems: "center",
-    // justifyContent: "center",
     paddingLeft: 40,
+    maxWidth: "90%",
   },
   header: {
     paddingTop: 24,
