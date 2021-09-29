@@ -13,7 +13,8 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import { Picker } from "@react-native-picker/picker";
 import { productTypeValues } from "../constants/productType";
-import { useIsFocused } from "@react-navigation/core";
+
+import CustomModal from "../components/CustomModal";
 
 const AddProduct = ({ navigation, route }) => {
   const [productName, setProductName] = useState("");
@@ -21,7 +22,7 @@ const AddProduct = ({ navigation, route }) => {
   const [productType, setProductType] = useState("apparel");
   const [date, setDate] = useState(new Date());
   const [show, setShow] = useState(false);
-  const [modalVisible, setModalVisible] = useState(true);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const onDateChangeHandler = (event, selectedDate) => {
     const currentDate = selectedDate || date;
@@ -49,6 +50,7 @@ const AddProduct = ({ navigation, route }) => {
       setProductCode("");
       setProductType("apparel");
       setDate(new Date());
+      setIsModalOpen(true);
     } catch (err) {
       console.log(err);
     }
@@ -56,33 +58,77 @@ const AddProduct = ({ navigation, route }) => {
 
   return (
     <SafeAreaView>
-      {/* <View
-        style={{
-          paddingLeft: 40,
-        }}
-      >
-        <Modal
-          animationType="slide"
-          transparent={true}
-          visible={modalVisible}
-          onRequestClose={() => {
-            Alert.alert("Modal has been closed.");
-            setModalVisible(!modalVisible);
+      {/* <CustomModal /> */}
+      <Modal visible={isModalOpen} animationType="slide" transparent={true}>
+        <View
+          style={{
+            flex: 1,
+            justifyContent: "center",
+            alignItems: "center",
+            backgroundColor: "rgba(52, 52, 52, 0.8)",
+            height: "100%",
           }}
         >
-          <View style={styles.centeredView}>
-            <View style={styles.modalView}>
-              <Text style={styles.modalText}>Hello World!</Text>
-              <Pressable
-                style={[styles.button, styles.buttonClose]}
-                onPress={() => setModalVisible(!modalVisible)}
+          <View
+            style={{
+              padding: "6%",
+              backgroundColor: "lightgrey",
+              height: "23%",
+              width: "75%",
+            }}
+          >
+            <View style={{ flex: 1, justifyContent: "flex-end" }}>
+              <Text
+                style={{ fontWeight: "bold", fontSize: 35, paddingLeft: "4%" }}
               >
-                <Text style={styles.textStyle}>Hide Modal</Text>
-              </Pressable>
+                Notice
+              </Text>
+              <Text
+                style={{
+                  fontSize: 20,
+                  paddingLeft: "4%",
+                  paddingBottom: "10%",
+                }}
+              >
+                Product Added
+              </Text>
+              <View
+                style={{
+                  flex: 1,
+                  flexDirection: "row",
+                  justifyContent: "space-around",
+                }}
+              >
+                <Pressable
+                  style={{
+                    alignItems: "center",
+                    justifyContent: "center",
+                    paddingHorizontal: 32,
+                    borderRadius: 15,
+                    backgroundColor: "grey",
+                  }}
+                  onPress={() => setIsModalOpen((prevState) => !prevState)}
+                >
+                  <Text style={{ color: "blue", fontSize: 30 }}>Cancel</Text>
+                </Pressable>
+                <Pressable
+                  style={{
+                    alignItems: "center",
+                    justifyContent: "center",
+                    paddingHorizontal: 32,
+                    borderRadius: 15,
+                    backgroundColor: "lightblue",
+                  }}
+                  onPress={() => setIsModalOpen((prevState) => !prevState)}
+                >
+                  <Text style={{ color: "white", fontSize: 30 }}>Ok</Text>
+                </Pressable>
+              </View>
             </View>
           </View>
-        </Modal>
-      </View> */}
+        </View>
+      </Modal>
+
       <View style={styles.header}>
         <Text style={styles.headerText}>Add Product</Text>
       </View>
