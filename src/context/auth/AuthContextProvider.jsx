@@ -12,7 +12,7 @@ const AuthContextProvider = ({ children }) => {
     dispatch,
     signIn: async (data) => {
       const token = "dummy-auth-token";
-      //   await SecureStore.setItemAsync("userToken", token);
+      await SecureStore.setItemAsync("userToken", token);
       dispatch({
         type: "SIGN_IN",
         token,

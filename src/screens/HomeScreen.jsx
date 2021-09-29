@@ -34,6 +34,7 @@ const HomeScreen = ({ navigation, route }) => {
 
   const signOutHandler = async () => {
     await authContext.signOut();
+    console.log("sign out: ", authContext);
   };
 
   const deleteHandler = async (product_code) => {
