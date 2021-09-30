@@ -62,7 +62,7 @@ const ProductDetails = ({ navigation, route }) => {
         },
         body: JSON.stringify(updateProduct),
       });
-      navigation.navigate("Home");
+      setIsModalOpen(true);
     } catch (err) {
       console.log(err);
     }
@@ -70,6 +70,12 @@ const ProductDetails = ({ navigation, route }) => {
 
   return (
     <SafeAreaView>
+      <CustomModal
+        visible={isModalOpen}
+        setIsModalOpen={setIsModalOpen}
+        title="Notice"
+        details="Product Edited"
+      />
       <View style={styles.container}>
         <View>
           <Text style={styles.label}>Product Name:</Text>

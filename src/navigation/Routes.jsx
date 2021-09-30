@@ -1,13 +1,12 @@
 import React, { useContext, useEffect } from "react";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { NavigationContainer } from "@react-navigation/native";
-import { AuthContext } from "./context/auth/AuthContextProvider";
+import { AuthContext } from "../context/auth/AuthContextProvider";
 import { ActivityIndicator, Text, View } from "react-native";
 import * as SecureStore from "expo-secure-store";
 
-import BottomTab from "./navigators/BottomTabNavigator";
-import ProductDetails from "./components/ProductDetails";
-import SignIn from "./screens/SignIn";
+import BottomTab from "./BottomTabNavigator";
+import SignIn from "../screens/SignIn";
 
 const Stack = createNativeStackNavigator();
 
@@ -44,19 +43,11 @@ const Routes = () => {
       {!authContext.state.userToken ? (
         <SignIn />
       ) : (
-        <Stack.Navigator initialRouteName="Home">
+        <Stack.Navigator initialRouteName="BottomTabNavigator">
           <Stack.Screen
-            name="Home"
+            name="BottomTabNavigator"
             component={BottomTab}
             options={{ headerShown: false }}
-          />
-          <Stack.Screen
-            name="ProductDetails"
-            component={ProductDetails}
-            options={{
-              headerStyle: { backgroundColor: "darkslateblue", height: 100 },
-              headerTintColor: "white",
-            }}
           />
         </Stack.Navigator>
       )}

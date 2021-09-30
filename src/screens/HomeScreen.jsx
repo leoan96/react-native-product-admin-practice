@@ -7,7 +7,6 @@ import {
   SafeAreaView,
   FlatList,
   TouchableOpacity,
-  Button,
   Pressable,
 } from "react-native";
 import { useIsFocused } from "@react-navigation/core";
@@ -111,9 +110,13 @@ const styles = StyleSheet.create({
   headerContainer: {
     paddingTop: 24,
     paddingLeft: "1.7%",
-    paddingBottom: 10,
+    paddingBottom: 20,
+    marginTop: "8%",
   },
-  header: { flexDirection: "row", justifyContent: "space-around" },
+  header: {
+    flexDirection: "row",
+    justifyContent: "space-around",
+  },
   headerText: {
     fontSize: 40,
     color: "#444",
