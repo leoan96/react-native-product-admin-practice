@@ -9,7 +9,12 @@ const SignIn = () => {
 
   return (
     <Background>
-      <View>
+      <View
+        style={{
+          maxWidth: "30%",
+          maxHeight: "30%",
+        }}
+      >
         <Logo />
         <View style={{ marginTop: "20%" }}>
           <Text style={{ fontSize: 40 }}>Log In</Text>
