@@ -12,6 +12,8 @@ import {
 import { useIsFocused } from "@react-navigation/core";
 import { AuthContext } from "../context/auth/AuthContextProvider";
 
+import LeftChevron from "../../assets/left-chevron.svg";
+
 const HomeScreen = ({ navigation, route }) => {
   const [products, setProducts] = useState([]);
   const isFocused = useIsFocused();
@@ -60,9 +62,15 @@ const HomeScreen = ({ navigation, route }) => {
         <View style={styles.header}>
           <Text style={styles.headerText}>All Products</Text>
           <View style={styles.logoutView}>
-            <Pressable onPress={signOutHandler}>
+            <Pressable
+              onPress={signOutHandler}
+              style={{
+                paddingRight: "4%",
+              }}
+            >
               <Text style={styles.logout}>Log Out</Text>
             </Pressable>
+            <LeftChevron width={40} height={40} />
           </View>
         </View>
       </View>
@@ -116,13 +124,17 @@ const styles = StyleSheet.create({
   header: {
     flexDirection: "row",
     justifyContent: "space-around",
+    alignItems: "center",
   },
   headerText: {
-    fontSize: 40,
+    fontSize: 36,
     color: "#444",
+    marginTop: "3%",
   },
   logoutView: {
     marginTop: "4%",
+    flexDirection: "row",
+    alignItems: "center",
   },
   logout: {
     color: "blue",

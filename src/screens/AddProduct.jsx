@@ -145,7 +145,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
   },
   input: {
-    height: 40,
+    height: 45,
     marginBottom: 35,
     borderWidth: 1,
     padding: 14,
